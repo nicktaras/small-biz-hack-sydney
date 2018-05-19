@@ -43,7 +43,7 @@ app.get('/', function(req, res){
 app.post('/quickbooks-test-customer-make-payment', function (req, res){
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: 'success' }, null, 3));
-}
+});
 
 // Quick Books will need to fire this call Callback
 // Which we can send to Google Actions to invoke speech.
