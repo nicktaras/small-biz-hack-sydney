@@ -128,7 +128,7 @@ app.post('/quickbooks-cb-payment-recieved', function (req, res){
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ data: data.payment.TotalAmt }, null, 3));
 
-})
+});
 
 // This will be fired when Quick Books calls back this Event
 // when money is withdrawn from the account.
@@ -137,7 +137,7 @@ app.post('/quickbooks-cb-ammount-withdrawn', function(req, res){
   var out = "X AUD has now been withdrawn from your account."
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: out }, null, 3));
-}
+});
 
 // Quick Books will invoke our API when payments are due
 // This will in turn invoke Goolge Assistant to ast for an answer from
@@ -146,7 +146,7 @@ app.post('/quickbooks-cb-payment-due', function(req, res){
   // Respond with Options HATEOUS.
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: "Shall we pay all outstanding invoices from our vendors from event X" }, null, 3));
-}
+});
 
 // Google will get the balance from Quick Books
 // Where this response will invoke Google to speak the balance given.
