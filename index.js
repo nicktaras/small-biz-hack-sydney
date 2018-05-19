@@ -5,7 +5,14 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var https = require('https');
 var axios = require('axios');
+var paypal = require('paypal-rest-sdk');
 var port = process.env.PORT || 4000;
+var credentials = require('./credentials-config');
+
+// Auth PAY PAL.
+paypal.configure(credentials.paypal);
+
+// PAY PAL
 
 // TODO:
 // GOOGLE: How to Trigger Google to Speak
@@ -19,6 +26,51 @@ app.use(express.static('public'))
 // We could place event html here.
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
+});
+
+// Learning Reference.
+// https://github.com/paypal/PayPal-node-SDK
+// https://www.youtube.com/watch?v=7k03jobKGXM
+app.post('/pay', (req, res) => {
+
+  var create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:4000/success",
+        "cancel_url": "http://localhost:4000/cancel"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "Ticket to the Moon",
+                "sku": "001",
+                "price": "25.00",
+                "currency": "USD",
+                "quantity": 1
+            }]
+        },
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        },
+        "description": "Ticket to the Moon"
+    }]
+};
+  // credentials.paypal
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+        throw error;
+    } else {
+        console.log("Create Payment Response");
+        console.log(payment);
+        res.send('test');
+    }
+  });
+
 });
 
 // API:
