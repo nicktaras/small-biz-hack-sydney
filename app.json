@@ -1,0 +1,22 @@
+{
+  "name": "Socket-Chat-Example",
+  "description": "SmallBizHackSydney",
+  "website": "tbc",
+  "repository": "tbc",
+  "logo": "tbc",
+  "success_url": "/",
+  "keywords": [
+    "node",
+    "express",
+    "socket.io",
+    "realtime",
+    "websocket"
+  ],
+  "scripts": {
+  },
+  "addons": [
+  ],
+  "env": {
+    "BUILDPACK_URL": "tbc"
+  }
+}

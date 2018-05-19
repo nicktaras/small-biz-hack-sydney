@@ -1,0 +1,36 @@
+
+{
+  "clientId": "Q0fETzGZYuYO2Ul6cFvqOqVHtt3oDBp3FI3u7vqBZW7hDzFY3U",
+  "clientSecret": "MMaLdGR3uAZ0eSkIBGTjqkVX9pozXfEFBfY4xIKz",
+  "redirectUri": "https://<host>/callback",
+  "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
+  "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
+  "scopes": {
+    "sign_in_with_intuit": [
+      "openid",
+      "profile",
+      "email",
+      "phone",
+      "address"
+    ],
+    "connect_to_quickbooks": [
+      "com.intuit.quickbooks.accounting",
+      "com.intuit.quickbooks.payment"
+    ],
+    "connect_handler": [
+      "com.intuit.quickbooks.accounting",
+      "com.intuit.quickbooks.payment",
+      "openid",
+      "profile",
+      "email",
+      "phone",
+      "address"
+    ]
+  }
+}
+
+// Accounting:
+// sandbox.api.intuit.com
+
+// Payments:
+// sandbox.api.intuit.com

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SmallBizHackSydney</title>
+  </head>
+  <body>
+
+    <p>Hello World, if I'm needed</p>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <a href="/quickbooks-test-customer-make-payment">/quickbooks-test-customer-make-payment</a>
+    <!-- <a href="/quickbooks-cb-payment-recieved">/quickbooks-cb-payment-recieved</a> -->
+    <!-- <a href="/quickbooks-cb-ammount-withdrawn">/quickbooks-cb-ammount-withdrawn</a> -->
+    <!-- <a href="/quickbooks-cb-payment-due">/quickbooks-cb-payment-due</a> -->
+    <a href="/google-get-balance">/google-get-balance</a>
+
+    <script>
+      $(function () {
+        var socket = io();
+        // socket.emit('chat message', 'something');
+      });
+    </script>
+  </body>
+</html>
