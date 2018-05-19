@@ -4,9 +4,11 @@
   "description": "A minimal chat application",
   "main": "index.js",
   "dependencies": {
+    "@google-cloud/storage": "^1.6.0",
     "axios": "^0.18.0",
     "express": "^4.15.2",
     "node-quickbooks": "^2.0.24",
+    "paypal-rest-sdk": "^1.8.1",
     "socket.io": "^1.7.4",
     "socketio": "^1.0.0"
   },

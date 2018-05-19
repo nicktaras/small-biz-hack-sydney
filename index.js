@@ -7,10 +7,16 @@ var https = require('https');
 var axios = require('axios');
 var port = process.env.PORT || 4000;
 
+// TODO:
+// GOOGLE: How to Trigger Google to Speak
+// PAYPAL: How to Trigger Payment with Payments
+// PAYPAL: How to Check balance
+
 // Define Public Folder for serving Front End.
 app.use(express.static('public'))
 
 // Front End Index.
+// We could place event html here.
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
