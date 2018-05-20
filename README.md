@@ -1,4 +1,4 @@
-# SmallBiHackSydney
+# SmallBizHackSydney
 
 Last Updated 20th May 2018.
 
