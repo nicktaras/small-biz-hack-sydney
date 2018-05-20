@@ -16,8 +16,8 @@ paypal.configure(credentials.paypal);
 
 // TODO:
 // GOOGLE: How to Trigger Google to Speak
-// PAYPAL: How to Trigger Payment with Payments
-// PAYPAL: How to Check balance
+// PAYPAL: How to Trigger Payment with Payments (DONE)
+// QUICKBOOKS: How to Get account balance
 
 // Define Public Folder for serving Front End.
 app.use(express.static('public'))
@@ -27,6 +27,82 @@ app.use(express.static('public'))
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
+
+
+//
+//
+// QUICK BOOKS
+//
+//
+
+// Cache-Control: no-cache, no-store
+// Content-Type: application/json;charset=UTF-8
+// {
+//   "refresh_token": "Q011535503314YJnHl7btJ5lNhj50B9s6yNKF1MH06UQUub3ys",
+//   "access_token": "eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Vfwx4xoprLDYozFp1_50xA.uoYx2_M0g3GZhn3kzmnGBx8bONJT-8M8s0YLSCn5orKA7ZdsKFMHTadaIPyOJIiq6OfFnmKF-TyY59-b3OvgNN623GjwlRVSRNLG8kRhLRcZVN3r14YCqve1NwMTewxlkLKXjyGanZB2piY2CDPao2CD0KA-NkOxTZ2PXqDbECmrsXezba4tEh1dtkUaCyIaR5Cpsf3mbdIzYu1zJWk1rGJtZnv_J4MVex2D_0uneqVZV8euNdBbw2XLqHpX_-BilpzIJrRpgnV8sHOoKFVSAZzVM8XKyp4DXzD9Mwa9T9R0XkW8kw2qub8cVTYCX1uuyZZbjDpGZserUQoXE2escCUDxUfNbVahtdtbRPQ6spUlTcMGQaBqLNq7u4TOtJpi_L_EL45XMH7doKBY-APzoStdZ8OvyXcl48CNB9Qv2t7s91rZriALLNmoTshZpw6LVbdG1nr7TJ62kDRb6cpsvpbttBCHFFXPND37EHqkFkFxNkvarTRPeuk4P14VTlVQyRFl52oD1r2FctTKrBiICI3AHwjyohkuznIAqOURsG6fYWx9IQc7vrPdyHvhafNLV-gDJ8tLDtdV5p5uhSn_JqgFkx0PbD_zvSW07gfWc2T6OkZMQMp2CiTMEfY7lr6qcn6Dc5eOw_G-dDvZ2Yw93ONS4hh9Z97JMo4_K3DyVF6nWG04etJTP-H8dgboscmniiKnzJbSiugpiL6Q25Qg76hSGD_TsNtFApppfZidMIg.7mMBGJZfDnfmntZ9MUuHwg",
+//   "expires_in": 3600,
+//   "x_refresh_token_expires_in": 8726400,
+//   "token_type": "bearer"
+// }
+
+app.get('/getaccountbalance', async (req, res) => {
+
+  console.log('get account balance requested from Quick Books');
+
+  var _params = {
+      "company": 193514699950549,
+      "account": 13
+  };
+
+  var _headers = {
+    "Content-Type": "application/json",
+    "refresh_token": "Q011535503314YJnHl7btJ5lNhj50B9s6yNKF1MH06UQUub3ys",
+    "access_token": "eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Vfwx4xoprLDYozFp1_50xA.uoYx2_M0g3GZhn3kzmnGBx8bONJT-8M8s0YLSCn5orKA7ZdsKFMHTadaIPyOJIiq6OfFnmKF-TyY59-b3OvgNN623GjwlRVSRNLG8kRhLRcZVN3r14YCqve1NwMTewxlkLKXjyGanZB2piY2CDPao2CD0KA-NkOxTZ2PXqDbECmrsXezba4tEh1dtkUaCyIaR5Cpsf3mbdIzYu1zJWk1rGJtZnv_J4MVex2D_0uneqVZV8euNdBbw2XLqHpX_-BilpzIJrRpgnV8sHOoKFVSAZzVM8XKyp4DXzD9Mwa9T9R0XkW8kw2qub8cVTYCX1uuyZZbjDpGZserUQoXE2escCUDxUfNbVahtdtbRPQ6spUlTcMGQaBqLNq7u4TOtJpi_L_EL45XMH7doKBY-APzoStdZ8OvyXcl48CNB9Qv2t7s91rZriALLNmoTshZpw6LVbdG1nr7TJ62kDRb6cpsvpbttBCHFFXPND37EHqkFkFxNkvarTRPeuk4P14VTlVQyRFl52oD1r2FctTKrBiICI3AHwjyohkuznIAqOURsG6fYWx9IQc7vrPdyHvhafNLV-gDJ8tLDtdV5p5uhSn_JqgFkx0PbD_zvSW07gfWc2T6OkZMQMp2CiTMEfY7lr6qcn6Dc5eOw_G-dDvZ2Yw93ONS4hh9Z97JMo4_K3DyVF6nWG04etJTP-H8dgboscmniiKnzJbSiugpiL6Q25Qg76hSGD_TsNtFApppfZidMIg.7mMBGJZfDnfmntZ9MUuHwg",
+    "expires_in": 3600,
+    "x_refresh_token_expires_in": 8726400,
+    "token_type": "bearer"
+  };
+
+  try {
+
+    console.log('attempt request to Quick Books', _params, _headers);
+
+    await axios.get('https://sandbox-quickbooks.api.intuit.com/v3/', {
+      params: _params,
+      headers: _headers })
+      .then(response => {
+
+        console.log('Nick Test QUICK BOOKS CONNECTED: ', response);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
+
+      })
+      } catch (e) {
+        return next(e)
+      };
+
+});
+
+// app.get('/test', async (req, res, next) => {
+    // try {
+    //     await axios.get('https://www.goget.com.au/')
+    //       .then(response => {
+    //         res.setHeader('Content-Type', 'application/json');
+    //         res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
+    //       })
+    // } catch (e) {
+    //     // fire down to error middleware
+    //     return next(e)
+    // }
+// })
+
+//
+//
+// PAY PAL
+//
+//
+
+// PAYMENTS CLIENT TO EVENT MANAGER.
 
 // Learning Reference.
 // https://github.com/paypal/PayPal-node-SDK
@@ -59,19 +135,198 @@ app.post('/pay', (req, res) => {
         "description": "Ticket to the Moon"
     }]
 };
-  // credentials.paypal
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
         throw error;
     } else {
-        console.log("Create Payment Response");
-        console.log(payment);
-        res.send('test');
+
+        // For testing. Redirect to Success.
+        // console.log("Create Payment Response");
+        // console.log(payment);
+        // res.send('test');
+
+        for (let i = 0; i < payment.links.length; i++) {
+
+          if(payment.links[i].rel === 'approval_url'){
+
+            res.redirect(payment.links[i].href);
+
+          }
+
+        }
+
     }
   });
 
 });
+
+// CANCEL PAYMENT PAYPAL
+app.get('/cancel', (req, res) => res.send('Cancelled'));
+
+// PAYMENT SUCCESS PAYPAL
+app.get('/success', (req, res) => {
+
+  console.log("req Nick Test", req);
+
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    "payer_id" : payerId,
+    "transactions": [{
+      "amount": {
+        "currency": "USD",
+        "total": "25.00"
+      }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        console.log(JSON.stringify(payment));
+        res.send("Success");
+    }
+});
+});
+
+// CREATE INVOICE PAYPAL.
+app.get('/invoice', (req, res) => {
+
+  var create_invoice_json = {
+    "merchant_info": {
+        "email": "nicktaras-facilitator@outlook.com",
+        "first_name": "Nick",
+        "last_name": "Taras",
+        "business_name": "Pete and Elle",
+        "phone": {
+            "country_code": "001",
+            "national_number": "5032141716"
+        },
+        "address": {
+            "line1": "1234 Main St.",
+            "city": "Portland",
+            "state": "OR",
+            "postal_code": "97217",
+            "country_code": "US"
+        }
+    },
+    "billing_info": [{
+        "email": "nicktaras@hotmail.co.uk"
+    }],
+    "items": [{
+        "name": "Sutures",
+        "quantity": 100.0,
+        "unit_price": {
+            "currency": "USD",
+            "value": 5
+        }
+    }],
+    "note": "Rocket to the moon",
+    "payment_term": {
+        "term_type": "NET_45"
+    },
+    "shipping_info": {
+        "first_name": "Sally",
+        "last_name": "Patient",
+        "business_name": "Not applicable",
+        "phone": {
+            "country_code": "001",
+            "national_number": "5039871234"
+        },
+        "address": {
+            "line1": "1234 Broad St.",
+            "city": "Portland",
+            "state": "OR",
+            "postal_code": "97216",
+            "country_code": "US"
+        }
+    },
+    "tax_inclusive": false,
+    "total_amount": {
+        "currency": "USD",
+        "value": "500.00"
+    }
+};
+
+paypal.invoice.create(create_invoice_json, function (error, invoice) {
+    if (error) {
+        throw error;
+    } else {
+        console.log("Create Invoice Response");
+        console.log(invoice);
+        res.send("Success Invoice Created");
+    }
+});
+
+});
+
+// SEND BULK PAYOUT
+
+app.get('/pay-event', (res, req) => {
+
+var sender_batch_id = Math.random().toString(36).substring(9);
+
+var create_payout_json = {
+    "sender_batch_header": {
+        "sender_batch_id": sender_batch_id,
+        "email_subject": "You have a payment"
+    },
+    "items": [
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": 0.99,
+                "currency": "USD"
+            },
+            "receiver": "nicktaras-buyer@outlook.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_1"
+        },
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": 0.90,
+                "currency": "USD"
+            },
+            "receiver": "shirt-supplier-two@mail.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_2"
+        },
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": 2.00,
+                "currency": "USD"
+            },
+            "receiver": "shirt-supplier-three@mail.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_3"
+        }
+      ]
+  };
+
+  paypal.payout.create(create_payout_json, function (error, payout) {
+      if (error) {
+          console.log(error.response);
+          throw error;
+      } else {
+          console.log("Create Payout Response");
+          console.log(payout);
+      }
+  });
+
+});
+
+
+//
+//
+// GOOGLE
+//
+//
 
 // API:
 
@@ -209,6 +464,37 @@ app.post('/quickbooks-cb-payment-due', function(req, res){
 // Google will get the balance from Quick Books
 // Where this response will invoke Google to speak the balance given.
 // This end point will be used: 'when asked for balance'
+// app.get('/google-get-balance', function(req, res){
+//   var mock = {
+//     "Account": {
+//       "Name": "Pete and Elle Accounts Receivable",
+//       "SubAccount": false,
+//       "FullyQualifiedName": "Pete and Elle Accounts Receivable",
+//       "Active": true,
+//       "Classification": "Asset",
+//       "AccountType": "Accounts Receivable",
+//       "AccountSubType": "AccountsReceivable",
+//       "CurrentBalance": 0,
+//       "CurrentBalanceWithSubAccounts": 0,
+//       "CurrencyRef": {
+//         "value": "AUD",
+//         "name": "Australian Dollar"
+//       },
+//       "domain": "QBO",
+//       "sparse": false,
+//       "Id": "108",
+//       "SyncToken": "0",
+//       "MetaData": {
+//         "CreateTime": "2018-05-19T01:43:22-07:00",
+//         "LastUpdatedTime": "2018-05-19T01:43:22-07:00"
+//       }
+//     },
+//     "time": "2018-05-19T02:20:39.614-07:00"
+//   }
+//   res.setHeader('Content-Type', 'application/json');
+//   res.send(JSON.stringify({ data: mock.Account.CurrentBalance }, null, 3));
+// });
+
 app.get('/google-get-balance', function(req, res){
   var mock = {
     "Account": {
@@ -219,7 +505,7 @@ app.get('/google-get-balance', function(req, res){
       "Classification": "Asset",
       "AccountType": "Accounts Receivable",
       "AccountSubType": "AccountsReceivable",
-      "CurrentBalance": 0,
+      "CurrentBalance": 100.00,
       "CurrentBalanceWithSubAccounts": 0,
       "CurrencyRef": {
         "value": "AUD",
@@ -236,8 +522,10 @@ app.get('/google-get-balance', function(req, res){
     },
     "time": "2018-05-19T02:20:39.614-07:00"
   }
+
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ data: mock.Account.CurrentBalance }, null, 3));
+  var _fulfillmentText = 'Your cash balance for today is $' + mock.Account.CurrentBalance;
+  res.send({ fulfillmentText: _fulfillmentText }, null, 3);
 });
 
 // Application Event handling goes here.
