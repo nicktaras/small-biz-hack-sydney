@@ -9,25 +9,21 @@ var paypal = require('paypal-rest-sdk');
 var port = process.env.PORT || 4000;
 var credentials = require('./credentials-config');
 
-// Auth PAY PAL.
-paypal.configure(credentials.paypal);
-
-// PAY PAL
+// Auth API's Here:
+paypal.configure(credentials.paypal); // PayPal Auth.
 
 // TODO:
 // GOOGLE: How to Trigger Google to Speak
 // PAYPAL: How to Trigger Payment with Payments (DONE)
 // QUICKBOOKS: How to Get account balance
 
-// Define Public Folder for serving Front End.
-app.use(express.static('public'))
+// Define Public Folder for serving Front End (if required).
+app.use(express.static('public'));
 
 // Front End Index.
-// We could place event html here.
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
-
 
 //
 //
@@ -35,15 +31,7 @@ app.get('/', function(req, res){
 //
 //
 
-// Cache-Control: no-cache, no-store
-// Content-Type: application/json;charset=UTF-8
-// {
-//   "refresh_token": "Q011535503314YJnHl7btJ5lNhj50B9s6yNKF1MH06UQUub3ys",
-//   "access_token": "eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Vfwx4xoprLDYozFp1_50xA.uoYx2_M0g3GZhn3kzmnGBx8bONJT-8M8s0YLSCn5orKA7ZdsKFMHTadaIPyOJIiq6OfFnmKF-TyY59-b3OvgNN623GjwlRVSRNLG8kRhLRcZVN3r14YCqve1NwMTewxlkLKXjyGanZB2piY2CDPao2CD0KA-NkOxTZ2PXqDbECmrsXezba4tEh1dtkUaCyIaR5Cpsf3mbdIzYu1zJWk1rGJtZnv_J4MVex2D_0uneqVZV8euNdBbw2XLqHpX_-BilpzIJrRpgnV8sHOoKFVSAZzVM8XKyp4DXzD9Mwa9T9R0XkW8kw2qub8cVTYCX1uuyZZbjDpGZserUQoXE2escCUDxUfNbVahtdtbRPQ6spUlTcMGQaBqLNq7u4TOtJpi_L_EL45XMH7doKBY-APzoStdZ8OvyXcl48CNB9Qv2t7s91rZriALLNmoTshZpw6LVbdG1nr7TJ62kDRb6cpsvpbttBCHFFXPND37EHqkFkFxNkvarTRPeuk4P14VTlVQyRFl52oD1r2FctTKrBiICI3AHwjyohkuznIAqOURsG6fYWx9IQc7vrPdyHvhafNLV-gDJ8tLDtdV5p5uhSn_JqgFkx0PbD_zvSW07gfWc2T6OkZMQMp2CiTMEfY7lr6qcn6Dc5eOw_G-dDvZ2Yw93ONS4hh9Z97JMo4_K3DyVF6nWG04etJTP-H8dgboscmniiKnzJbSiugpiL6Q25Qg76hSGD_TsNtFApppfZidMIg.7mMBGJZfDnfmntZ9MUuHwg",
-//   "expires_in": 3600,
-//   "x_refresh_token_expires_in": 8726400,
-//   "token_type": "bearer"
-// }
+// TODO AUTH QUICK BOOKS:
 
 app.get('/getaccountbalance', async (req, res) => {
 
@@ -65,14 +53,12 @@ app.get('/getaccountbalance', async (req, res) => {
 
   try {
 
-    console.log('attempt request to Quick Books', _params, _headers);
-
     await axios.get('https://sandbox-quickbooks.api.intuit.com/v3/', {
       params: _params,
       headers: _headers })
       .then(response => {
 
-        console.log('Nick Test QUICK BOOKS CONNECTED: ', response);
+        console.log('QUICK BOOKS CONNECTED: ', response);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
 
