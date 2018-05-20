@@ -15,6 +15,7 @@ Working as a Middleware API, Pete and Elle will orchestrate the power of these A
    - create a file named: 'credentials-config.js'
    - Add the following code below to the file.
    - Paste in your Id's and Secrets (this will change as the application grows)
+4. Once done, you can run the app :) with 'npm start'
 
 ~~~~
 module.exports = {
