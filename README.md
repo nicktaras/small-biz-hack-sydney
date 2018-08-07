@@ -4,8 +4,7 @@ Last Updated 20th May 2018.
 
 ## Pete and Elle
 
-A POC application to connect many API's, including; Pay Pal, Google Assistant, Quick Books.. and more (not in the app yet).
-Working as a Middleware API, Pete and Elle will orchestrate the power of these API's and bring together something new.
+A POC application to connect many API's, including; Pay Pal, Google Assistant, Quick Books.
 
 ## DEV SETUP
 
@@ -15,7 +14,7 @@ Working as a Middleware API, Pete and Elle will orchestrate the power of these A
    - create a file named: 'credentials-config.js'
    - Add the following code below to the file.
    - Paste in your Id's and Secrets (this will change as the application grows)
-4. Once done, you can run the app :) with 'npm start'
+4. Once done, you can run the app with 'npm start'
 
 ~~~~
 module.exports = {
@@ -29,7 +28,3 @@ module.exports = {
   google: {}
 }
 ~~~~
-
-## TESTS
-
-tbc
