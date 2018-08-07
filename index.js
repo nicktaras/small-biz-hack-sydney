@@ -31,21 +31,17 @@ app.get('/', function(req, res){
 //
 //
 
-// TODO AUTH QUICK BOOKS:
-
 app.get('/getaccountbalance', async (req, res) => {
 
-  console.log('get account balance requested from Quick Books');
-
   var _params = {
-      "company": 193514699950549,
-      "account": 13
+      "company": "", 
+      "account": "" 
   };
 
   var _headers = {
     "Content-Type": "application/json",
-    "refresh_token": "Q011535503314YJnHl7btJ5lNhj50B9s6yNKF1MH06UQUub3ys",
-    "access_token": "eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Vfwx4xoprLDYozFp1_50xA.uoYx2_M0g3GZhn3kzmnGBx8bONJT-8M8s0YLSCn5orKA7ZdsKFMHTadaIPyOJIiq6OfFnmKF-TyY59-b3OvgNN623GjwlRVSRNLG8kRhLRcZVN3r14YCqve1NwMTewxlkLKXjyGanZB2piY2CDPao2CD0KA-NkOxTZ2PXqDbECmrsXezba4tEh1dtkUaCyIaR5Cpsf3mbdIzYu1zJWk1rGJtZnv_J4MVex2D_0uneqVZV8euNdBbw2XLqHpX_-BilpzIJrRpgnV8sHOoKFVSAZzVM8XKyp4DXzD9Mwa9T9R0XkW8kw2qub8cVTYCX1uuyZZbjDpGZserUQoXE2escCUDxUfNbVahtdtbRPQ6spUlTcMGQaBqLNq7u4TOtJpi_L_EL45XMH7doKBY-APzoStdZ8OvyXcl48CNB9Qv2t7s91rZriALLNmoTshZpw6LVbdG1nr7TJ62kDRb6cpsvpbttBCHFFXPND37EHqkFkFxNkvarTRPeuk4P14VTlVQyRFl52oD1r2FctTKrBiICI3AHwjyohkuznIAqOURsG6fYWx9IQc7vrPdyHvhafNLV-gDJ8tLDtdV5p5uhSn_JqgFkx0PbD_zvSW07gfWc2T6OkZMQMp2CiTMEfY7lr6qcn6Dc5eOw_G-dDvZ2Yw93ONS4hh9Z97JMo4_K3DyVF6nWG04etJTP-H8dgboscmniiKnzJbSiugpiL6Q25Qg76hSGD_TsNtFApppfZidMIg.7mMBGJZfDnfmntZ9MUuHwg",
+    "refresh_token": "",
+    "access_token": "",
     "expires_in": 3600,
     "x_refresh_token_expires_in": 8726400,
     "token_type": "bearer"
@@ -62,25 +58,11 @@ app.get('/getaccountbalance', async (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
 
-      })
-      } catch (e) {
+      }, catch (e) {
         return next(e)
-      };
+      });
 
 });
-
-// app.get('/test', async (req, res, next) => {
-    // try {
-    //     await axios.get('https://www.goget.com.au/')
-    //       .then(response => {
-    //         res.setHeader('Content-Type', 'application/json');
-    //         res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
-    //       })
-    // } catch (e) {
-    //     // fire down to error middleware
-    //     return next(e)
-    // }
-// })
 
 //
 //
@@ -88,11 +70,6 @@ app.get('/getaccountbalance', async (req, res) => {
 //
 //
 
-// PAYMENTS CLIENT TO EVENT MANAGER.
-
-// Learning Reference.
-// https://github.com/paypal/PayPal-node-SDK
-// https://www.youtube.com/watch?v=7k03jobKGXM
 app.post('/pay', (req, res) => {
 
   var create_payment_json = {
@@ -120,17 +97,15 @@ app.post('/pay', (req, res) => {
         },
         "description": "Ticket to the Moon"
     }]
-};
+  };
 
   paypal.payment.create(create_payment_json, function (error, payment) {
-    if (error) {
-        throw error;
-    } else {
 
-        // For testing. Redirect to Success.
-        // console.log("Create Payment Response");
-        // console.log(payment);
-        // res.send('test');
+    if (error) {
+      
+        throw error;
+      
+    } else {
 
         for (let i = 0; i < payment.links.length; i++) {
 
@@ -147,13 +122,9 @@ app.post('/pay', (req, res) => {
 
 });
 
-// CANCEL PAYMENT PAYPAL
 app.get('/cancel', (req, res) => res.send('Cancelled'));
 
-// PAYMENT SUCCESS PAYPAL
 app.get('/success', (req, res) => {
-
-  console.log("req Nick Test", req);
 
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
@@ -176,10 +147,10 @@ app.get('/success', (req, res) => {
         console.log(JSON.stringify(payment));
         res.send("Success");
     }
-});
+  });
+  
 });
 
-// CREATE INVOICE PAYPAL.
 app.get('/invoice', (req, res) => {
 
   var create_invoice_json = {
@@ -236,21 +207,16 @@ app.get('/invoice', (req, res) => {
         "currency": "USD",
         "value": "500.00"
     }
-};
+  };
 
-paypal.invoice.create(create_invoice_json, function (error, invoice) {
+  paypal.invoice.create(create_invoice_json, function (error, invoice) {
     if (error) {
         throw error;
     } else {
-        console.log("Create Invoice Response");
-        console.log(invoice);
         res.send("Success Invoice Created");
     }
+  });
 });
-
-});
-
-// SEND BULK PAYOUT
 
 app.get('/pay-event', (res, req) => {
 
@@ -314,38 +280,11 @@ var create_payout_json = {
 //
 //
 
-// API:
-
-// POST: Make Payments - Invoke Pay Pal to run Payments.
-// POST: Recieved Payment Callback End Point / Triggers Google Home to Say:
-
-// When The Events company makes a payment
-// Recieve how much
-// Return Success / Response.
-// TODO: Make Payment Quick Books.
-
-// Example of Async request.
-// app.get('/test', async (req, res, next) => {
-//     try {
-//         await axios.get('https://www.goget.com.au/')
-//           .then(response => {
-//             res.setHeader('Content-Type', 'application/json');
-//             res.send(JSON.stringify({ data: 'invoice created' }, null, 3));
-//           })
-//     } catch (e) {
-//         // fire down to error middleware
-//         return next(e)
-//     }
-// })
-
-// We'll need to invoke the API to make a payment from quick books.
 app.post('/quickbooks-test-customer-make-payment', function (req, res){
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: 'success' }, null, 3));
 });
 
-// Quick Books will need to fire this call Callback
-// Which we can send to Google Actions to invoke speech.
 app.post('/quickbooks-cb-payment-recieved', function (req, res){
 
     var data = {
@@ -423,63 +362,21 @@ app.post('/quickbooks-cb-payment-recieved', function (req, res){
       },
       "time": "2015-07-28T15:16:15.435-07:00"
     }
-
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ data: data.payment.TotalAmt }, null, 3));
-
 });
 
-// This will be fired when Quick Books calls back this Event
-// when money is withdrawn from the account.
-// Google will be invoked - to update us with the new account balance.
 app.post('/quickbooks-cb-ammount-withdrawn', function(req, res){
   var out = "X AUD has now been withdrawn from your account."
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: out }, null, 3));
 });
 
-// Quick Books will invoke our API when payments are due
-// This will in turn invoke Goolge Assistant to ast for an answer from
-// our event manager.
 app.post('/quickbooks-cb-payment-due', function(req, res){
   // Respond with Options HATEOUS.
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ data: "Shall we pay all outstanding invoices from our vendors from event X" }, null, 3));
 });
-
-// Google will get the balance from Quick Books
-// Where this response will invoke Google to speak the balance given.
-// This end point will be used: 'when asked for balance'
-// app.get('/google-get-balance', function(req, res){
-//   var mock = {
-//     "Account": {
-//       "Name": "Pete and Elle Accounts Receivable",
-//       "SubAccount": false,
-//       "FullyQualifiedName": "Pete and Elle Accounts Receivable",
-//       "Active": true,
-//       "Classification": "Asset",
-//       "AccountType": "Accounts Receivable",
-//       "AccountSubType": "AccountsReceivable",
-//       "CurrentBalance": 0,
-//       "CurrentBalanceWithSubAccounts": 0,
-//       "CurrencyRef": {
-//         "value": "AUD",
-//         "name": "Australian Dollar"
-//       },
-//       "domain": "QBO",
-//       "sparse": false,
-//       "Id": "108",
-//       "SyncToken": "0",
-//       "MetaData": {
-//         "CreateTime": "2018-05-19T01:43:22-07:00",
-//         "LastUpdatedTime": "2018-05-19T01:43:22-07:00"
-//       }
-//     },
-//     "time": "2018-05-19T02:20:39.614-07:00"
-//   }
-//   res.setHeader('Content-Type', 'application/json');
-//   res.send(JSON.stringify({ data: mock.Account.CurrentBalance }, null, 3));
-// });
 
 app.get('/google-get-balance', function(req, res){
   var mock = {
@@ -508,19 +405,12 @@ app.get('/google-get-balance', function(req, res){
     },
     "time": "2018-05-19T02:20:39.614-07:00"
   }
-
   res.setHeader('Content-Type', 'application/json');
   var _fulfillmentText = 'Your cash balance for today is $' + mock.Account.CurrentBalance;
   res.send({ fulfillmentText: _fulfillmentText }, null, 3);
 });
 
-// Application Event handling goes here.
-io.on('connection', function(socket){
-  // On new something dispatch something to subscribers.
-  // socket.on('something', function(something){
-  //   io.emit('something', something);
-  // });
-});
+io.on('connection', function(socket){});
 
 http.listen(port, function(){
   console.log('listening on *:' + port);
