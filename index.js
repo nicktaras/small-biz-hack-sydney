@@ -12,11 +12,6 @@ var credentials = require('./credentials-config');
 // Auth API's Here:
 paypal.configure(credentials.paypal); // PayPal Auth.
 
-// TODO:
-// GOOGLE: How to Trigger Google to Speak
-// PAYPAL: How to Trigger Payment with Payments (DONE)
-// QUICKBOOKS: How to Get account balance
-
 // Define Public Folder for serving Front End (if required).
 app.use(express.static('public'));
 
